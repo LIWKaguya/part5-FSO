@@ -1,8 +1,8 @@
 import axios from 'axios'
 const baseUrl = '/api/login'
 
-const login = async Object => {
-    const response = await axios.post(baseUrl, Object)
+const login = async object => {
+    const response = await axios.post(baseUrl, object)
     return response.data
 }
 
