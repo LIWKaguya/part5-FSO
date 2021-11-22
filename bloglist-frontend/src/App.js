@@ -1,18 +1,10 @@
+import './index.css'
 import React, { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
+import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import './index.css'
 import Togglable from './components/Toggable'
-
-const ErrorMessage = ({errorMessage}) => {
-  if(errorMessage === null) return null
-  return (
-    <div className="error">
-      {errorMessage}
-    </div>
-  )
-}
 
 const SuscessMessage = ({suscessMessage}) => {
   if(suscessMessage === null) return null
@@ -23,16 +15,25 @@ const SuscessMessage = ({suscessMessage}) => {
   )
 }
 
+const ErrorMessage = ({errorMessage}) => {
+  if(errorMessage === null) return null
+  return (
+    <div className="error">
+      {errorMessage}
+    </div>
+  )
+}
+
+
+
 const App = () => {
   const [blogs, setBlogs] = useState([])
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [suscessMessage, setSuscessMessage] = useState(null)
+  
 
   const blogFormRef = useRef()
 
@@ -51,6 +52,17 @@ const App = () => {
     }
   }, [])
 
+  const addBlog = async (blogObj) => {
+    blogFormRef.current.toggleVisibility()
+    const returnedBlog = await blogService.upload(blogObj)
+    setErrorMessage('aaaa')
+    setBlogs(blogs.concat(returnedBlog))
+    setSuscessMessage(`a new blog ${returnedBlog.title} by ${returnedBlog.author} has been added`)
+    console.log(suscessMessage)
+    console.log(errorMessage)
+    // setTimeout(() => {setSuscessMessage(null)}, 5000)
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -64,25 +76,6 @@ const App = () => {
       )
     } catch (ex) {
       setErrorMessage('Wrong user name or password')
-      setTimeout(() => {setErrorMessage(null)}, 5000)
-    }
-  }
-
-  const handleBlog = async (event) => {
-    event.preventDefault()
-    try {
-      const blog = await blogService.upload({
-        title, author, url
-      })
-      setBlogs(blogs.concat(blog))
-      setTitle('')
-      setUrl('')
-      setAuthor('')
-      setSuscessMessage(`a new blog ${blog.title} by ${blog.author} is added`)
-      setTimeout(() => {setSuscessMessage(null)}, 5000)
-      blogFormRef.current.toggleVisibility()
-    } catch(ex) {
-      setErrorMessage('Invalid input')
       setTimeout(() => {setErrorMessage(null)}, 5000)
     }
   }
@@ -118,8 +111,7 @@ const App = () => {
     )
   }
   return (
-    <div>
-      <ErrorMessage errorMessage={errorMessage} />
+    <div> 
       <SuscessMessage suscessMessage={suscessMessage} />
       <h2>blogs</h2>
       {user.username} logged in 
@@ -128,13 +120,7 @@ const App = () => {
         setUser(null)
       }}>log out</button>
       <Togglable buttonLabel='create new blog' ref={blogFormRef}>
-      <form onSubmit={handleBlog}>
-        <h2>Creating new blog</h2>
-        Title:<input type='text' value={title} onChange={({target}) => setTitle(target.value)}/><br />
-        Author:<input type='text' value={author} onChange={({target}) => setAuthor(target.value)}/><br />
-        Url:<input type='text' value={url} onChange={({target}) => setUrl(target.value)}/><br />
-        <button type='submit'>Create</button>
-      </form>
+        <BlogForm addBlog={addBlog} suscessMessage={suscessMessage}/>
       </Togglable>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
