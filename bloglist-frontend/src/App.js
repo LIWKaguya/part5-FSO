@@ -74,6 +74,13 @@ const App = () => {
     setBlogs(blogs)
   }
 
+  const deleteBlog = async blogObj => {
+    const deletedBlog = await blogService.clearOut(blogObj)
+    const index = blogs.indexOf(blog => blog.id === deletedBlog.id)
+    blogs.splice(index, 1)
+    setBlogs(blogs)
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -136,7 +143,7 @@ const App = () => {
         <BlogForm addBlog={addBlog} suscessMessage={suscessMessage}/>
       </Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} updateBlog={updateBlog}/>
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} currentUser={user}/>
       )}
     </div>
   )

@@ -2,7 +2,7 @@ import React from 'react'
 import Togglable from './Toggable'
 
 
-const Blog = ({blog, updateBlog}) => {
+const Blog = ({blog, updateBlog, deleteBlog, currentUser}) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -17,6 +17,12 @@ const Blog = ({blog, updateBlog}) => {
     })
   }
 
+  const confirmDelete = object => {
+    deleteBlog({
+      id : blog.id
+    })
+  }
+
   return ( 
   <div style={blogStyle}>
     {blog.title} by {blog.author} <br />
@@ -24,6 +30,7 @@ const Blog = ({blog, updateBlog}) => {
     {blog.url} <br />
     likes : {blog.likes} <button onClick={updatingBlog}>Like</button><br />
     {blog.user.username} <br />
+    {blog.user.username !== currentUser.username ? <></>: <><button onClick={() => {window.confirm(`Delete ${blog.title} by ${blog.author} ?`) ? confirmDelete(): <></>}}>Delete</button> <br /></>}
     </Togglable>
   </div>  
   )}

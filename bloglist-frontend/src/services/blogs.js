@@ -24,5 +24,13 @@ const upload = async object => {
   return response.data
 }
 
-const object = {getAll, setToken, upload, update}
+const clearOut = async object => {
+  const config = {
+    headers: {Authorization: token}
+  }
+  const response = await axios.delete(`${baseUrl}/${object.id}`, config)
+  return response.data
+}
+
+const object = {getAll, setToken, upload, update, clearOut}
 export default object 
