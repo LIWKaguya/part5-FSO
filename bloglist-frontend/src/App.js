@@ -34,7 +34,6 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [suscessMessage, setSuscessMessage] = useState(null)
   
-
   const blogFormRef = useRef()
 
   useEffect(() => {
@@ -51,6 +50,14 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
+
+  const comp = (a, b) => {
+    if(a.likes > b.likes) return -1
+    if(a.likes < b.likes) return 1
+    return 0
+  }
+
+  blogs.sort(comp)
 
   const addBlog = async (blogObj) => {
     blogFormRef.current.toggleVisibility()
