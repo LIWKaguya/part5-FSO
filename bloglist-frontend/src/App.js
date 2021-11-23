@@ -55,12 +55,9 @@ const App = () => {
   const addBlog = async (blogObj) => {
     blogFormRef.current.toggleVisibility()
     const returnedBlog = await blogService.upload(blogObj)
-    setErrorMessage('aaaa')
     setBlogs(blogs.concat(returnedBlog))
     setSuscessMessage(`a new blog ${returnedBlog.title} by ${returnedBlog.author} has been added`)
-    console.log(suscessMessage)
-    console.log(errorMessage)
-    // setTimeout(() => {setSuscessMessage(null)}, 5000)
+    setTimeout(() => {setSuscessMessage(null)}, 5000)
   }
 
   const handleLogin = async (event) => {
@@ -74,6 +71,8 @@ const App = () => {
       window.localStorage.setItem(
         'loggedBlogsUser', JSON.stringify(userLogin)
       )
+      setUsername('')
+      setPassword('')
     } catch (ex) {
       setErrorMessage('Wrong user name or password')
       setTimeout(() => {setErrorMessage(null)}, 5000)
@@ -84,7 +83,7 @@ const App = () => {
     return (
       <>
       <ErrorMessage errorMessage={errorMessage} />
-      <Togglable buttonLabel='login'>
+      <Togglable buttonLabel='login' cancelLabel='cancel'>
       <form onSubmit={handleLogin}>
         <div>
           username
@@ -119,7 +118,7 @@ const App = () => {
         window.localStorage.clear()
         setUser(null)
       }}>log out</button>
-      <Togglable buttonLabel='create new blog' ref={blogFormRef}>
+      <Togglable buttonLabel='create new blog' cancelLabel='cancel' ref={blogFormRef}>
         <BlogForm addBlog={addBlog} suscessMessage={suscessMessage}/>
       </Togglable>
       {blogs.map(blog =>
