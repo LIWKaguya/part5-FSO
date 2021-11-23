@@ -60,6 +60,13 @@ const App = () => {
     setTimeout(() => {setSuscessMessage(null)}, 5000)
   }
 
+  const updateBlog = async blogObj => {
+    const updatedBlog = await blogService.update(blogObj)
+    const index = blogs.indexOf(blog => blog.id === updatedBlog.id)
+    blogs[index] = updatedBlog
+    setBlogs(blogs)
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -122,7 +129,7 @@ const App = () => {
         <BlogForm addBlog={addBlog} suscessMessage={suscessMessage}/>
       </Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} updateBlog={updateBlog}/>
       )}
     </div>
   )

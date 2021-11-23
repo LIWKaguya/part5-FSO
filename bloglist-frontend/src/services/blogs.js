@@ -11,6 +11,10 @@ const getAll = () => {
   return request.then(response => response.data)
 }
 
+const update = async object => {
+  const response = await axios.put(`${baseUrl}/${object.id}`, object)
+  return response.data
+}
 
 const upload = async object => {
   const config = {
@@ -20,5 +24,5 @@ const upload = async object => {
   return response.data
 }
 
-const object = {getAll, setToken, upload}
+const object = {getAll, setToken, upload, update}
 export default object 
