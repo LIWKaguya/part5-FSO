@@ -4,9 +4,9 @@ import Blog from './components/Blog'
 import BlogForm from './components/BlogForm'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import Togglable from './components/Toggable'
+import Togglable from './components/Togglable'
 
-const SuscessMessage = ({suscessMessage}) => {
+const SuscessMessage = ({ suscessMessage }) => {
   if(suscessMessage === null) return null
   return (
     <div className="suscess">
@@ -15,7 +15,7 @@ const SuscessMessage = ({suscessMessage}) => {
   )
 }
 
-const ErrorMessage = ({errorMessage}) => {
+const ErrorMessage = ({ errorMessage }) => {
   if(errorMessage === null) return null
   return (
     <div className="error">
@@ -33,13 +33,13 @@ const App = () => {
   const [user, setUser] = useState(null)
   const [errorMessage, setErrorMessage] = useState(null)
   const [suscessMessage, setSuscessMessage] = useState(null)
-  
+
   const blogFormRef = useRef()
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
       setBlogs( blogs )
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -103,38 +103,38 @@ const App = () => {
   if(user === null) {
     return (
       <>
-      <ErrorMessage errorMessage={errorMessage} />
-      <Togglable buttonLabel='login' cancelLabel='cancel'>
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-            <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-            <input
-            type="password"
-            value={password}
-            name="Password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-      </Togglable>
+        <ErrorMessage errorMessage={errorMessage} />
+        <Togglable buttonLabel='login' cancelLabel='cancel'>
+          <form onSubmit={handleLogin}>
+            <div>
+              username
+              <input
+                type="text"
+                value={username}
+                name="Username"
+                onChange={({ target }) => setUsername(target.value)}
+              />
+            </div>
+            <div>
+              password
+              <input
+                type="password"
+                value={password}
+                name="Password"
+                onChange={({ target }) => setPassword(target.value)}
+              />
+            </div>
+            <button type="submit">login</button>
+          </form>
+        </Togglable>
       </>
     )
   }
   return (
-    <div> 
+    <div>
       <SuscessMessage suscessMessage={suscessMessage} />
       <h2>blogs</h2>
-      {user.username} logged in 
+      {user.username} logged in
       <button onClick={() => {
         window.localStorage.clear()
         setUser(null)

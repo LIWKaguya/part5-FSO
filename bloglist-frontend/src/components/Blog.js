@@ -1,8 +1,8 @@
 import React from 'react'
-import Togglable from './Toggable'
+import Togglable from './Togglable'
 
 
-const Blog = ({blog, updateBlog, deleteBlog, currentUser}) => {
+const Blog = ({ blog, updateBlog, deleteBlog, currentUser }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -23,16 +23,16 @@ const Blog = ({blog, updateBlog, deleteBlog, currentUser}) => {
     })
   }
 
-  return ( 
-  <div style={blogStyle}>
-    {blog.title} by {blog.author} <br />
-    <Togglable buttonLabel='show' cancelLabel='hide'>
-    {blog.url} <br />
+  return (
+    <div style={blogStyle}>
+      {blog.title} by {blog.author} <br />
+      <Togglable buttonLabel='show' cancelLabel='hide'>
+        {blog.url} <br />
     likes : {blog.likes} <button onClick={updatingBlog}>Like</button><br />
-    {blog.user.username} <br />
-    {blog.user.username !== currentUser.username ? <></>: <><button onClick={() => {window.confirm(`Delete ${blog.title} by ${blog.author} ?`) ? confirmDelete(): <></>}}>Delete</button> <br /></>}
-    </Togglable>
-  </div>  
+        {blog.user.username} <br />
+        {blog.user.username !== currentUser.username ? <></>: <><button onClick={() => {window.confirm(`Delete ${blog.title} by ${blog.author} ?`) ? confirmDelete(): <></>}}>Delete</button> <br /></>}
+      </Togglable>
+    </div>
   )}
 
 export default Blog
