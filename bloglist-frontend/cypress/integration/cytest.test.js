@@ -19,4 +19,24 @@ describe('Blog app', () => {
 
         cy.contains('username1 logged in')
     })
+
+    describe('Login', () => {
+      it('succeeds with correct credentials', () => {
+        cy.contains('login').click()
+        cy.get('#username').type('username1')
+        cy.get('#password').type('password1')
+        cy.get('#login-button').click()
+
+        cy.contains('username1 logged in')
+      })
+
+      it('fails with wrong credentials', () => {
+        cy.contains('login').click()
+        cy.get('#username').type('username1')
+        cy.get('#password').type('password2')
+        cy.get('#login-button').click()
+
+        cy.contains('username1 logged in').should('not.exist')
+      })
+    })
 })
