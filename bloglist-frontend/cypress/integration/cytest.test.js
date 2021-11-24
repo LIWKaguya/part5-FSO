@@ -35,8 +35,10 @@ describe('Blog app', () => {
         cy.get('#username').type('username1')
         cy.get('#password').type('password2')
         cy.get('#login-button').click()
-
-        cy.contains('username1 logged in').should('not.exist')
+        cy.get('.error').should('contain', 'Wrong user name or password')
+        .and('have.css', 'color', 'rgb(255, 0, 0)')
+        .and('have.css', 'border-style', 'solid')
+        cy.get('html').should('not.contain', 'username1 logged in')
       })
     })
 })
