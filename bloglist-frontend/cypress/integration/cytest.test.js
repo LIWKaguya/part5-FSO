@@ -41,4 +41,23 @@ describe('Blog app', () => {
         cy.get('html').should('not.contain', 'username1 logged in')
       })
     })
+
+    describe('When logged in',() => {
+      beforeEach(() => {
+        cy.login({
+          username: 'username1',
+          password: 'password1'
+        })
+      })
+  
+      it('A blog can be created',() => {
+        cy.contains('username1 logged in')
+        cy.contains('create new blog').click()
+        cy.get('#title').type('Tokino Sora')
+        cy.get('#author').type('KuroKousuii')
+        cy.get('#url').type('www.sora.com')
+        cy.contains('Create').click()
+        cy.contains('Tokino Sora by KuroKousuii')
+      })
+    })
 })
