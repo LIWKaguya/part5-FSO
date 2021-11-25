@@ -70,10 +70,8 @@ describe('Blog app', () => {
         })
         it('User can like a blog', () => {
           cy.contains('Amelia Watson by KuroKousuii').contains('show').click()
-          cy.contains('Amelia Watson by KuroKousuii').contains('like').click()
-          cy.reload()
-          cy.contains('Amelia Watson by KuroKousuii').contains('show').click()
-          cy.contains('Amelia Watson by KuroKousuii').contains('likes:334')
+          cy.contains('Amelia Watson by KuroKousuii').contains('Like').click()
+          cy.contains('Amelia Watson by KuroKousuii').contains('334')
         })
       })
     })

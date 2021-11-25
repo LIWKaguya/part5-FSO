@@ -13,7 +13,12 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser }) => {
 
   const updatingBlog = object => {
     updateBlog({
-      ...blog, likes: blog.likes+1
+      ...blog,
+      likes: blog.likes+1,
+    })
+    console.log({
+      ...blog,
+      likes: blog.likes+1,
     })
   }
 
