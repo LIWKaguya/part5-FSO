@@ -59,5 +59,22 @@ describe('Blog app', () => {
         cy.contains('Create').click()
         cy.contains('Tokino Sora by KuroKousuii')
       })
+
+      describe('when several blog exists', () => {
+        beforeEach(() => {
+          cy.createBlog({title:"Amelia Watson", author:"KuroKousuii", url:"www.amelia.com", likes:333})
+          cy.createBlog({title:"Mori Calliope", author:"KuroKousuii", url:"www.calliope.com", likes:333})
+          cy.createBlog({title:"Ninomae Ina'nis", author:"KuroKousuii", url:"www.ina.com", likes:333})
+          cy.createBlog({title:"Takanashi Kiara", author:"KuroKousuii", url:"www.kiara.com", likes:333})
+          cy.createBlog({title:"Gawr Gura", author:"KuroKousuii", url:"www.gura.com", likes:333})
+        })
+        it('User can like a blog', () => {
+          cy.contains('Amelia Watson by KuroKousuii').contains('show').click()
+          cy.contains('Amelia Watson by KuroKousuii').contains('like').click()
+          cy.reload()
+          cy.contains('Amelia Watson by KuroKousuii').contains('show').click()
+          cy.contains('Amelia Watson by KuroKousuii').contains('likes:334')
+        })
+      })
     })
 })
