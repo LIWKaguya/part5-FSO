@@ -133,7 +133,7 @@ const App = () => {
       <SuscessMessage suscessMessage={suscessMessage} />
       <h2>blogs</h2>
       {user.username} logged in
-      <button onClick={() => {
+      <button id='logout' onClick={() => {
         window.localStorage.clear()
         setUser(null)
       }}>log out</button>
@@ -141,7 +141,9 @@ const App = () => {
         <BlogForm addBlog={addBlog} suscessMessage={suscessMessage}/>
       </Togglable>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} currentUser={user}/>
+        <div key={blog.id} className='blog'>
+          <Blog blog={blog} updateBlog={updateBlog} deleteBlog={deleteBlog} currentUser={user}/>
+        </div>
       )}
     </div>
   )

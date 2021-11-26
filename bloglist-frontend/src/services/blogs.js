@@ -20,7 +20,6 @@ const upload = async object => {
   const config = {
     headers: { Authorization: token }
   }
-  console.log(token)
   const response = await axios.post(baseUrl, object, config)
   return response.data
 }
@@ -30,7 +29,6 @@ const clearOut = async object => {
     const config = {
       headers: { Authorization: token }
     }
-    console.log(object)
     await axios.delete(`${baseUrl}/${object.id}`, config)
   } catch (e) {
     console.trace(e)
