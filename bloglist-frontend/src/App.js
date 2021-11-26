@@ -66,18 +66,17 @@ const App = () => {
     setSuscessMessage(`a new blog ${returnedBlog.title} by ${returnedBlog.author} has been added`)
     setTimeout(() => {setSuscessMessage(null)}, 5000)
   }
-
+  console.log(user)
   const updateBlog = async blogObj => {
     const updatedBlog = await blogService.update(blogObj)
-    console.log(updatedBlog)
     setBlogs(blogs.map(blog => blog.id !== updatedBlog.id ? blog : updatedBlog))
   }
 
   const deleteBlog = async blogObj => {
-    const deletedBlog = await blogService.clearOut(blogObj)
-    const index = blogs.indexOf(blog => blog.id === deletedBlog.id)
-    blogs.splice(index, 1)
-    setBlogs(blogs)
+    const avoid = blogObj.id
+    console.log(user)
+    await blogService.clearOut(blogObj)
+    setBlogs(blogs.filter(blog => blog.id !== avoid ))
   }
 
   const handleLogin = async (event) => {
