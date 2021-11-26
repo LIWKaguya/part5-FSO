@@ -14,13 +14,15 @@ const Blog = ({ blog, updateBlog, deleteBlog, currentUser }) => {
   const updatingBlog = object => {
     updateBlog({
       likes: blog.likes+1,
+      author: blog.author,
       id: blog.id
     })
   }
 
   const confirmDelete = object => {
     deleteBlog({
-      id : blog.id
+      id : blog.id,
+      user: blog.user
     })
   }
 

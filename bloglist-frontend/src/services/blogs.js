@@ -30,8 +30,8 @@ const clearOut = async object => {
     const config = {
       headers: { Authorization: token }
     }
-    console.log(token)
-    await axios.delete(`${baseUrl}/${object.id}`, object, config)
+    console.log(object)
+    await axios.delete(`${baseUrl}/${object.id}`, config)
   } catch (e) {
     console.trace(e)
   }
